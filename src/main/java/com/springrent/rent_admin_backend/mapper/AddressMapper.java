@@ -17,6 +17,7 @@ public class AddressMapper {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         Address address = new Address();
 
+        address.setTitle(updateAddressByCustomerRequestBodyDTO.getTitle());
         address.setAddressLine1(updateAddressByCustomerRequestBodyDTO.getAddressLine1());
         address.setAddressLine2(updateAddressByCustomerRequestBodyDTO.getAddressLine2());
         address.setCity(updateAddressByCustomerRequestBodyDTO.getCity());
@@ -30,18 +31,21 @@ public class AddressMapper {
     public static AddressResponseDTO mapToAddressResponseDTO(Address address) {
         return new AddressResponseDTO(
                 address.getId(),
+                address.getTitle(),
                 address.getAddressLine1(),
                 address.getAddressLine2(),
                 address.getCity(),
-                address.getCountry(),
-                address.getIsDeleted()
+                address.getCountry()
         );
     }
 
     public static ListAddressResponseDTO mapToListAddressResponseDTO(List<Address> addresses) {
         List<AddressResponseDTO> addressResponseDTOS = new ArrayList<>();
         for(Address address: addresses) {
-            addressResponseDTOS.add(mapToAddressResponseDTO(address));
+            if (!address.getIsDeleted()) {
+                addressResponseDTOS.add(mapToAddressResponseDTO(address));
+            }
+
         }
 
         ListAddressResponseDTO listAddressResponseDTO = new ListAddressResponseDTO();

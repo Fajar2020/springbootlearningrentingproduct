@@ -107,7 +107,7 @@ public class RentServiceImpl implements RentService {
         Timestamp endTime = getDateTimestamp(endDate, 1);
 
         List<RentDetailBasic> rentDetails;
-        if (customerId == null) {
+        if (customerId == null || customerId == 0) {
             rentDetails = rentDetailRepository.findByStateAndCreatedAtGreaterThanEqualAndCreatedAtLessThanEqualAndIsDeletedFalse(
                     state,
                     startTime,

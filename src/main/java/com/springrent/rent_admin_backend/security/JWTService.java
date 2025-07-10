@@ -1,9 +1,14 @@
 package com.springrent.rent_admin_backend.security;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.springrent.rent_admin_backend.models.Users;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +43,24 @@ public class JWTService {
 
     public String getUsername(String token) {
         return JWT.decode(token).getClaim(USERNAME_KEY).asString();
+    }
+
+    public boolean verifyToken(String token) {
+        try {
+
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .build(); // creates the verifier with default settings
+
+            DecodedJWT jwt = verifier.verify(token); // This will throw if expired
+
+            System.out.println("Token is valid. Subject: " + jwt.getSubject());
+            return true;
+        } catch (TokenExpiredException e) {
+            System.out.println("Token expired at: " + e.getExpiredOn());
+            return false;
+        } catch (JWTVerificationException e) {
+            System.out.println("Invalid token: " + e.getMessage());
+            return false;
+        }
     }
 }

@@ -10,7 +10,4 @@ public interface AddressRepository extends JpaRepository <Address, Long>{
 
 
     Optional<Address> findByIdAndIsDeletedFalse(Long id);
-
-    //    @Query(value = "SELECT a FROM address a WHERE a.is_deleted = :isDeleted and a.customer_id =:customerId")
-    List<Address> findByCustomer_IdAndIsDeletedFalse(Long id);
 }

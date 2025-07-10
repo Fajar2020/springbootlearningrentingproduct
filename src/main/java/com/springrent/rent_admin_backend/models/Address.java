@@ -20,6 +20,9 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title", length = 255)
+    private String title;
+
     @Column(name = "address_line1", length = 512, nullable = false)
     private String addressLine1;
 

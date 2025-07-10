@@ -12,9 +12,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AddressResponseDTO {
     private Long id;
+    private String title;
     private String addressLine1;
     private String addressLine2;
     private String city;
     private String country;
-    private Boolean isDeleted;
 }
